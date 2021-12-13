@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Editions;
+use App\Models\Edition;
 use Illuminate\Http\Request;
 
-class EditionsController extends Controller
+class EditionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class EditionsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Editions  $editions
+     * @param  \App\Models\Edition  $edition
      * @return \Illuminate\Http\Response
      */
-    public function show(Editions $editions)
+    public function show(Edition $edition)
     {
         //
     }
@@ -52,10 +52,10 @@ class EditionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Editions  $editions
+     * @param  \App\Models\Edition  $edition
      * @return \Illuminate\Http\Response
      */
-    public function edit(Editions $editions)
+    public function edit(Edition $edition)
     {
         //
     }
@@ -64,10 +64,10 @@ class EditionsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Editions  $editions
+     * @param  \App\Models\Edition  $edition
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Editions $editions)
+    public function update(Request $request, Edition $edition)
     {
         //
     }
@@ -75,10 +75,10 @@ class EditionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Editions  $editions
+     * @param  \App\Models\Edition  $edition
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Editions $editions)
+    public function destroy(Edition $edition)
     {
         //
     }

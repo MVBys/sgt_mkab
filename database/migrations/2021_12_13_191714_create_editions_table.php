@@ -15,6 +15,10 @@ class CreateEditionsTable extends Migration
     {
         Schema::create('editions', function (Blueprint $table) {
             $table->id();
+            $table->Char('title',255);
+            $table->Text('description');
+            $table->Char('pdf_file',255);
+            $table->Char('img_file',255);
             $table->timestamps();
         });
     }

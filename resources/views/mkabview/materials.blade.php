@@ -2,13 +2,12 @@
 
 @section('title')Главная@endsection
 
-
 @section('pagetopic')
 
     @if (!empty($id))
         <section class="page-title">
             <div class="container">
-                <div class="p-4 p-md-5 mb-4 text-white rounded ">
+                <div class="p-4 p-md-5 mb-4 text-white rounded">
 
                     <h1 class="display-5 fst-italic text-center">{{ $categorys[$id - 1]['title'] }}</h1>
 
@@ -16,15 +15,27 @@
                 </div>
             </div>
         </section>
-    @else
-        <section class="pagetitle">
+    @elseif(isset($material['title']))
+
+        <section class="page-title">
             <div class="container">
                 <div class="p-4 p-md-5 mb-4 text-white rounded ">
-                    <div class="col-md-6 px-0">
-                        <h1 class="display-4 fst-italic">Методический кабинет</h1>
-                        <p class="lead my-3">Школа Гумантираного Труда</p>
 
-                    </div>
+                    <h2 class="display-6 fst-italic text-center">{{ $material['title'] }}</h2>
+
+
+                </div>
+            </div>
+        </section>
+
+    @else
+        <section class="page-title">
+            <div class="container">
+                <div class="p-4 p-md-5 mb-4 text-white rounded ">
+
+                    <h2 class="display-6 fst-italic text-center">Учебно-методические материалы</h2>
+
+
                 </div>
             </div>
         </section>

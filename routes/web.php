@@ -20,7 +20,10 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 //     return view('welcome');
 // });
 
-Route::get('/', [MainController::class, 'index'])->name('home');
+Route::get('/', [MainController::class, 'editions'])->name('edition');
+
+Route::get('/materials', [MainController::class, 'materials'])->name('home');
+
 Route::get('/showCategory/{id}', [MainController::class, 'showCategory'])->name('showCategory');
 Route::get('/showMaterial/{id}', [MainController::class, 'showMaterial'])->name('showMaterial');
 

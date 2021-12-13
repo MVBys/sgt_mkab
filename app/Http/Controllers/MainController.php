@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Edition;
 use \App\Models\Category;
 use \App\Models\Material;
 use Illuminate\Http\Request;
@@ -14,14 +15,24 @@ use Illuminate\Support\Facades\Storage;
 class MainController extends Controller
 {
     //
-    public function index()
+
+
+    public function editions()
+    {
+        $editions = Edition::latest()->simplePaginate(3);
+        return view('mkabview.editions', compact('editions'));
+    }
+
+
+    public function materials()
     {
         $categorys = Category::all();
         $materials = Material::where('published',1)->latest()->simplePaginate(30);
 
 
-        return view('mkabview.index', compact('categorys', 'materials'));
+        return view('mkabview.materials', compact('categorys', 'materials'));
     }
+
 
     public function showCategory($id)
     {
@@ -32,7 +43,7 @@ class MainController extends Controller
         $category_ids= CategoryMaterial::where('category_id',$id)->pluck('material_id');
         $materials = Material::whereIn('id',$category_ids)->latest()->simplePaginate(30);
 
-        return view('mkabview.index', compact('categorys', 'materials', 'id'));
+        return view('mkabview.materials', compact('categorys', 'materials', 'id'));
 
     }
 
