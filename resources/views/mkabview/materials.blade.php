@@ -64,11 +64,16 @@
             </div>
             <div class="col-12 col-md-6">
                 <h4>Тип материла</h4>
-                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                    onchange="window.location.href = this.options[this.selectedIndex].value">
+                    <option value="{{ route('home') }}">Выберите тип материла </option>
+                    @foreach ($material_types as $type)
+
+                        <option value="{{ route('MateryalType', ['id' => $type['id']]) }}" @if (url()->current() == route('MateryalType', ['id' => $type['id']]))
+                            selected
+                    @endif> {{ $type['title'] }} </option>
+                    @endforeach
+
                 </select>
             </div>
         </div>

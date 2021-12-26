@@ -24,14 +24,14 @@ class TeacherdataRequest extends FormRequest
     public function rules()
     {
         return [
-            'surname' => 'max:255',
-            'name' => 'max:255',
-            'patronymic' => 'max:255',
-            'experience' => 'max:255',
-            'qualification_category_id' => 'integer',
-            'teaching_title_id' => 'integer',
+            'surname' => 'required|max:255',
+            'name' => 'required|max:255',
+            'patronymic' => 'required|max:255',
+            'experience' => 'required|max:255',
+            'qualification_category_id' => 'required|integer',
+            'teaching_title_id' => 'required|integer',
             'teacher_photo' => 'mimes:jpg,png|file|max:5512',
-            'portfolio_presentation' => 'mimes:pptx|file|max:5512',
+            'portfolio_presentation' => 'mimes:pptx|file|max:15512',
 
         ];
     }

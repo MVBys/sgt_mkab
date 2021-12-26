@@ -6,6 +6,7 @@ use App\Models\Category;
 use \App\Models\Material;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use App\Models\Material_type;
 use App\Models\CategoryMaterial;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,6 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\TeacherdataRequest;
 use App\Http\Requests\CreatematerialRequest;
 use App\Http\Requests\UpdatematerialRequest;
-use App\Models\Material_type;
 
 class TeacheroomController extends Controller
 {
@@ -32,65 +32,65 @@ class TeacheroomController extends Controller
         $teaching_titles = DB::table('teaching_title')->get();
         $teacher_datas = DB::table('teachers')->where('user_id', Auth::id())->get();
 
-        if(!isset($teacher_datas[0])){
+        if (!isset($teacher_datas[0])) {
             $teacher_data = (object) array(
-                'id'=>'',
-                'user_id'=>'',
-                'name'=>'',
-                'surname'=>'',
-                'patronymic'=>'',
-                'experience'=>'',
-                'qualification_category_id'=>'',
-                'teaching_title_id'=>'',
-                'teacher_photo'=>'',
-                'portfolio_presentation'=>'',
+                'id' => '',
+                'user_id' => '',
+                'name' => '',
+                'surname' => '',
+                'patronymic' => '',
+                'experience' => '',
+                'qualification_category_id' => '',
+                'teaching_title_id' => '',
+                'teacher_photo' => '',
+                'portfolio_presentation' => '',
             );
-        } else{
+        } else {
             $teacher_data = (object) array(
-                'id'=>$teacher_datas[0]->id,
-                'user_id'=>$teacher_datas[0]->user_id,
-                'name'=>$teacher_datas[0]->name,
-                'surname'=>$teacher_datas[0]->surname,
-                'patronymic'=>$teacher_datas[0]->patronymic,
-                'experience'=>$teacher_datas[0]->experience,
-                'qualification_category_id'=>$teacher_datas[0]->qualification_category_id,
-                'teaching_title_id'=>$teacher_datas[0]->teaching_title_id,
-                'teacher_photo'=>$teacher_datas[0]->teacher_photo,
-                'portfolio_presentation'=>$teacher_datas[0]->portfolio_presentation,
+                'id' => $teacher_datas[0]->id,
+                'user_id' => $teacher_datas[0]->user_id,
+                'name' => $teacher_datas[0]->name,
+                'surname' => $teacher_datas[0]->surname,
+                'patronymic' => $teacher_datas[0]->patronymic,
+                'experience' => $teacher_datas[0]->experience,
+                'qualification_category_id' => $teacher_datas[0]->qualification_category_id,
+                'teaching_title_id' => $teacher_datas[0]->teaching_title_id,
+                'teacher_photo' => $teacher_datas[0]->teacher_photo,
+                'portfolio_presentation' => $teacher_datas[0]->portfolio_presentation,
             );
         }
-        return view('mkabview.teacheroom.teacherdata', compact('qualification_categorys', 'teaching_titles','teacher_data'));
+        return view('mkabview.teacheroom.teacherdata', compact('qualification_categorys', 'teaching_titles', 'teacher_data'));
     }
 
     public function saveteacherdata(TeacherdataRequest $request)
     {
-        $data =  $request->validated();
-        $data['name'] = ucfirst($data['name']);
-        $data['surname'] = ucfirst($data['surname']);
-        $data['patronymic'] = ucfirst($data['patronymic']);
 
-        if (isset($data['teacher_photo'])) {
+        $teachers_data = DB::table('teachers')->where('user_id', Auth::id())->first();
 
-            $data['teacher_photo'] = Storage::put('/public/theacherdata/'. Auth::id(), $data['teacher_photo'] );
-            $data['teacher_photo'] = Str::replace('public/', '', $data['teacher_photo']);
-            $foto_name = DB::table('teachers')->where('user_id', Auth::id())->value('teacher_photo');
-            if ($foto_name != '') Storage::delete('public/'. $foto_name);
+        $data_request = $request->validated();
+        $data_request['name'] = Str::ucfirst($data_request['name']);
+        $data_request['surname'] = Str::ucfirst($data_request['surname']);
+        $data_request['patronymic'] = Str::ucfirst($data_request['patronymic']);
 
-        }
-        if (isset($data['portfolio_presentation'])) {
-            $data['portfolio_presentation'] = Storage::put('/public/theacherdata/'. Auth::id(), $data['portfolio_presentation'] );
-            $data['portfolio_presentation'] = Str::replace('public/', '', $data['portfolio_presentation']);
-        }else{
-            $data['portfolio_presentation']='';
+        if (!isset($data_request['teacher_photo'])) {
+            $data_request['teacher_photo'] = $teachers_data->teacher_photo;
+        } else {
+            Storage::delete($teachers_data->teacher_photo);
+            $data_request['teacher_photo'] = Storage::put('theacherdata/' . Auth::id(), $data_request['teacher_photo']);
         }
 
-        DB::table('teachers')->updateOrInsert(['user_id' => Auth::id()], $data);
+        if (!isset($data_request['portfolio_presentation'])) {
+            $data_request['portfolio_presentation'] = $teachers_data->portfolio_presentation;
+        } else {
+            Storage::delete($teachers_data->teacher_photo);
+            $data_request['portfolio_presentation'] = Storage::put('theacherdata/' . Auth::id(), $data_request['portfolio_presentation']);
+        }
+
+        DB::table('teachers')->updateOrInsert(['user_id' => Auth::id()], $data_request);
 
         return redirect()->route('teacherdata');
 
     }
-
-
 
     public function materials()
     {
@@ -104,26 +104,19 @@ class TeacheroomController extends Controller
 
         $material_data = $request->validated();
 
-
-        if (isset($material_data['pdf_link'])) {
-            $material_data['pdf_link'] = Str::replace('public/', '', Storage::put('/public/materials/'. Auth::id(), $material_data['pdf_link'] ));
-        }else{
-            $material_data['pdf_link'] = '';
-        }
+        $material_data['pdf_link'] = Storage::put('materials/' . Auth::id(), $material_data['pdf_link']);
 
         if (isset($material_data['presentation_link'])) {
-            $material_data['presentation_link'] = Str::replace('public/', '',Storage::put('/public/materials/'. Auth::id(), $material_data['presentation_link'] ));
-        }else{
+            $material_data['presentation_link'] = Storage::put('materials/' . Auth::id(), $material_data['presentation_link']);
+        } else {
             $material_data['presentation_link'] = '';
         }
 
         $category_ids = Arr::pull($material_data, 'category');
 
-
-
         $missing_data = [
             'user_id' => Auth::id(),
-            'image' => $category_ids[0].'.jpg',
+            'image' => $category_ids[0] . '.jpg',
             'created_at' => date("Y-m-d H:i:s"),
             'updated_at' => date("Y-m-d H:i:s"),
         ];
@@ -131,11 +124,11 @@ class TeacheroomController extends Controller
 
         $material_id = DB::table('materials')->insertGetId($material_data);
 
-        $category_material    = [];
-        foreach ($category_ids as  $category_id ) {
+        $category_material = [];
+        foreach ($category_ids as $category_id) {
             array_push($category_material, [
-                'category_id'=>$category_id,
-                'material_id'=>$material_id,
+                'category_id' => $category_id,
+                'material_id' => $material_id,
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s"),
             ]);
@@ -144,9 +137,6 @@ class TeacheroomController extends Controller
 
         return redirect()->route('teachermaterials');
     }
-
-
-
 
     public function publish($id)
     {
@@ -186,7 +176,6 @@ class TeacheroomController extends Controller
         DB::table('category_material')->where('material_id', $id)->delete();
         DB::table('materials')->where('id', $id)->delete();
 
-
         return redirect()->route('teachermaterials');
     }
 
@@ -208,21 +197,22 @@ class TeacheroomController extends Controller
 
         $request_data = $request->validated();
 
-        $old_material= Material::find($request_data['id']);
-        if ( is_null($old_material) ) return redirect()->route('teachermaterials');
+       $old_material = Material::find($request_data['id']);
+       dd(Storage::disk('public')->delete($old_material['presentation_link']));
 
-        if ( isset($request_data['pdf_link']) ) {
-            if (Storage::disk('public')->exists($old_material['pdf_link'])) {
-                Storage::disk('public')->delete($old_material['pdf_link']);
-            }
-            $request_data['pdf_link'] = Str::replace('public/', '', Storage::put('/public/materials/'. Auth::id(), $request_data['pdf_link'] ));
+
+        if (is_null($old_material)) {
+            return redirect()->route('teachermaterials');
         }
 
-        if ( isset($request_data['presentation_link']) ) {
-            if (Storage::disk('public')->exists($old_material['presentation_link'])) {
-                Storage::disk('public')->delete($old_material['presentation_link']);
-            }
-            $request_data['presentation_link'] = Str::replace('public/', '', Storage::put('/public/materials/'. Auth::id(), $request_data['presentation_link'] ));
+        if (isset($request_data['pdf_link'])) {
+            Storage::disk('public')->delete($old_material['pdf_link']);
+            $request_data['pdf_link'] = Storage::put('materials/' . Auth::id(), $request_data['pdf_link']);
+        }
+
+        if (isset($request_data['presentation_link'])) {
+            Storage::disk('public')->delete($old_material['presentation_link']);
+            $request_data['presentation_link'] = Storage::put('materials/' . Auth::id(), $request_data['presentation_link']);
         }
 
         $category_ids = Arr::pull($request_data, 'category');
@@ -230,10 +220,10 @@ class TeacheroomController extends Controller
         $request_data = Arr::add($request_data, 'updated_at', date("Y-m-d H:i:s"));
 
         $category_material = [];
-        foreach ($category_ids as  $category_id ) {
+        foreach ($category_ids as $category_id) {
             array_push($category_material, [
-                'category_id'=>$category_id,
-                'material_id'=>$material_id,
+                'category_id' => $category_id,
+                'material_id' => $material_id,
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s"),
             ]);

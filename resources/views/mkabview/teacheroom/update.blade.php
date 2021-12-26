@@ -6,7 +6,7 @@
 @section('pagetopic')
     <section class="page-title">
         <div class="container">
-            <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+            <div class="p-4 p-md-5 mb-4 text-white rounded ">
 
                 <h1 class="display-5 fst-italic text-center">Кабинет учителя</h1>
 

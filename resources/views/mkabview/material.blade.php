@@ -80,13 +80,26 @@
                     <a href="{{ Storage::url($material['presentation_link']) }} ">Скачать презентацию </a>
                 </div>
             </div>
+
+            <h2 class="display-6  text-info text-center">Презентация</h2>
+            <iframe src="https://docs.google.com/viewer?url={{ Storage::url($material['presentation_link']) }}&embedded=true"
+            style="width: 100%; height: 500px;" frameborder="0">Ваш браузер не поддерживает фреймы</iframe>
+
         @endif
 
-        <iframe id="iframepdf" style="width: 100%; height: 800px " src="{{ Storage::url($material['pdf_link']) }}"></iframe>
+        {{-- <iframe id="iframepdf" style="width: 100%; height: 800px "
+            src="{{ Storage::url($material['pdf_link']) }}"></iframe> --}}
 
 
+        {{-- <object data="{{ Storage::url($material['pdf_link']) }}" type="application/pdf" width="800" height="1200"
+            typemustmatch>
+            <p>You don't have a PDF plugin, but you can <a href="{{ Storage::url($material['pdf_link']) }}">download the
+                    PDF file.</a></p>
+        </object> --}}
 
-
+        <h2 class="display-6  text-info text-center">Текстовый документ</h2>
+        <iframe src="https://docs.google.com/viewer?url={{ Storage::url($material['pdf_link']) }}&embedded=true"
+            style="width: 100%; height: 800px;" frameborder="0">Ваш браузер не поддерживает фреймы</iframe>
 
         {{-- <h2 class="mb-3">{{$material['title']}}</h2>
         <p class="text-white-50">Описание</p>

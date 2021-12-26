@@ -31,6 +31,7 @@ class CreatematerialRequest extends FormRequest
             'pdf_link' => 'required|mimes:pdf|file|max:5512',
             'presentation_link' => 'mimes:pptx|file|max:5512',
             'published' => 'integer',
+
         ];
     }
 }

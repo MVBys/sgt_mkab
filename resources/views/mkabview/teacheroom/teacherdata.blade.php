@@ -27,6 +27,17 @@
         <div class="row row-cols-5 row-cols-md-3 g-4 ">
             <div class="col" style="width: 100%;">
 
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+
+                @endif
+
                 <form action="{{route('saveteacherdata')}}" method="POST" enctype="multipart/form-data">
                     @csrf
 

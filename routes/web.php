@@ -21,11 +21,16 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 // });
 
 Route::get('/', [MainController::class, 'editions'])->name('edition');
+Route::get('/edition/{id}', [MainController::class, 'showEdition'])->name('show_edition');
+
+Route::get('/collective', [MainController::class, 'collective'])->name('collective');
+// Route::get('/collective/{id}', [MainController::class, 'showColleg'])->name('colleg');
+
 
 Route::get('/materials', [MainController::class, 'materials'])->name('home');
-
 Route::get('/showCategory/{id}', [MainController::class, 'showCategory'])->name('showCategory');
 Route::get('/showMaterial/{id}', [MainController::class, 'showMaterial'])->name('showMaterial');
+Route::get('/showMateryalType/{id}', [MainController::class, 'showMateryalType'])->name('MateryalType');
 
 Route::middleware(['auth'])->prefix('/teacheroom')->group(function () {
 

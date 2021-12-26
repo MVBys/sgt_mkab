@@ -1,8 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light ">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('home') }}">
+        <a class="navbar-brand" href="{{ route('edition') }}">
             <span style="font-size: 2em; color: rgb(5, 197, 255);">
-                <i class="fas fa-graduation-cap"></i>
+                <img src="{{ asset('public/images/logo.png')}}" alt="logo">
+                {{-- <i class="fas fa-graduation-cap"></i> --}}
             </span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -17,6 +18,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Материалы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ route('collective') }}">Коллектив</a>
                 </li>
 
 
