@@ -1,0 +1,10 @@
+.pagetitle, .page-title {
+	background: rgb(42,199,205);
+	background: linear-gradient(38deg, rgba(42,199,205,1) 21%, rgba(155,104,236,1) 98%);
+	/*background-image: url(../images/sgt_header.jpg);*/
+
+}
+.filter{
+	/*border-bottom: 1px solid rgb(42,199,205);*/
+	margin-bottom: 25px;
+}
