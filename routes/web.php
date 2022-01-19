@@ -2,7 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\AdminPanel\Home;
 use App\Http\Controllers\TeacheroomController;
+use App\Http\Controllers\AdminPanel\HomeController;
+use App\Http\Controllers\AdminPanel\EditionController;
+use App\Http\Controllers\AdminPanel\UsersController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
@@ -47,6 +51,28 @@ Route::middleware(['auth'])->prefix('/teacheroom')->group(function () {
     Route::post('/creatematerial', [TeacheroomController::class, 'creatematerial'])->name('creatematerial');
     Route::post('/saveteacherdata', [TeacheroomController::class, 'saveteacherdata'])->name('saveteacherdata');
 });
+
+
+
+Route::middleware(['auth'])->prefix('/adminpanel')->group(function () {
+
+    Route::get('/', [HomeController::class, 'index'])->name('adminpanel');
+    Route::get('/createedition', [EditionController::class, 'create'])->name('create_edition');
+    Route::get('/editedition/{id}', [EditionController::class, 'edit'])->name('edit_edition');
+    Route::get('/destroyedition/{id}', [EditionController::class, 'destroy'])->name('destroy_edition');
+    Route::get('/users', [UsersController::class, 'index'])->name('users');
+    Route::get('/createuser', [UsersController::class, 'create'])->name('create_user');
+    Route::get('/edituser/{id}', [UsersController::class, 'edit'])->name('edit_user');
+    Route::get('/destroyuser/{id}', [UsersController::class, 'destroy'])->name('destroy_user');
+
+    // Route::post('/saveteacherdata', [TeacheroomController::class, 'saveteacherdata'])->name('saveteacherdata');
+    Route::post('/storeedition', [EditionController::class, 'store'])->name('storeedition');
+    Route::post('/updateedition/{id}', [EditionController::class, 'update'])->name('updateedition');
+    Route::post('/storeuser', [UsersController::class, 'store'])->name('storeuser');
+    Route::post('/updateuser/{id}', [UsersController::class, 'update'])->name('update_user');
+
+});
+
 
 
 
