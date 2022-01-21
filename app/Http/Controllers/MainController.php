@@ -22,7 +22,7 @@ class MainController extends Controller
 
     public function editions()
     {
-        $editions = Edition::latest()->simplePaginate(3);
+        $editions = Edition::latest()->simplePaginate(6);
         return view('mkabview.editions', compact('editions'));
     }
 

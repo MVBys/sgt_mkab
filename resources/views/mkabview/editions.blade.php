@@ -35,12 +35,12 @@
 
 
             <div class=" col-lg-6">
-                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div style="height: 250px" class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                     <div class="col p-4 d-flex flex-column position-static">
 
-                        <h3 class="mb-0" style="color: rgba(42,199,205,1)">{{$edition->title}}</h3>
+                        <h3 class="mb-0" style="color: rgba(42,199,205,1); font-size:22px">{{$edition->title}}</h3>
 
-                        <p class="card-text mb-auto"> {{$edition->description}}</p>
+                        <p style="font-size: 14px" class="card-text mb-auto"> {{Str::limit($edition->description, 200)}}</p>
                         <a href="{{route('show_edition', $edition->id )}}" class="btn btn-outline-info " style="width: 180px;">Читать далее ...</a>
                     </div>
                     <div class="col-auto  d-lg-block">
