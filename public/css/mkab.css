@@ -8,3 +8,38 @@
 	/*border-bottom: 1px solid rgb(42,199,205);*/
 	margin-bottom: 25px;
 }
+.edition{
+	height: 250px;
+}
+.edition__title{
+	color: rgba(42,199,205,1); 
+	font-size:22px;
+}
+.edition__description{
+	font-size: 14px;
+}
+.edition__button{
+	width: 180px;
+}
+.edition__img{
+	border: 2px solid rgba(42,199,205,1);
+}
+@media(max-width: 767px) {
+	.edition{
+		height: auto;
+	}
+	.edition__text{
+		padding: 0,5rem;
+	}
+	.edition__title{
+		font-size:16px;
+	}
+	.edition__description{
+		font-size:10px;
+	}
+	.edition__button{
+		width: 150px;
+		height: 30px;
+		font-size: 12px;
+	}
+}
